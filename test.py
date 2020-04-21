@@ -1,5 +1,5 @@
 from bot import get_response
-
+import random
 
 def test_bot(tests, times=100):
 
@@ -8,14 +8,19 @@ def test_bot(tests, times=100):
     test = []
     response = []
 
-    total = len(test)
+
     for key, value in tests.items():
         test.append(key)
         response.append(value)
 
-    for i in range(times):
-        for j in range(len(test)):
-            if str(get_response(test[i])) == response[i]:
-                correct += 1
+    total = len(test)
 
-    return correct, total
+    print(f'Test running for {times} times')
+    for i in range(times):
+        for j in range(total):
+            val = random.choice(list(tests.items()))
+            if str(get_response(val[0])) == val[1]:
+                correct += 1
+    print('Test finished')
+
+    return correct, total * times

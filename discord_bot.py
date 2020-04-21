@@ -11,12 +11,8 @@ tests = {'what is covid-19?': 'Coronavirus disease 2019 (COVID-19) is an infecti
 correct, total = test_bot(tests)
 
 correct = round(correct / total, 2)
-print('Correct: ' + colored(str(correct) + '%', 'green'))
-print('Incorrect: ' + colored(str(1 - correct) + '%', 'red'))
-if correct >= 0.7:
-    print(colored('Satifactory Accuracy!', 'green'))
-else:
-    print(colored('Not Satifactory Accuracy!', 'red'))
+print(colored('Correct: ' + str(correct) + '%', 'green'))
+print(colored('Incorrect: ' + str(round(1 - correct, 2)) + '%', 'red'))
 
 # print in console of bot name
 @client.event

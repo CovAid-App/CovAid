@@ -52,7 +52,6 @@ def get_response(message):
         answer (str): the message responded from the chatbot
     """
     response = chatbot.get_response(message)
-    print(response)
     return response
 
 
