@@ -23,6 +23,9 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
+    # debug
+    print(message.content)
+
     # if tagged the bot
     if message.content.startswith('<@!701186191940255785>'):
 
