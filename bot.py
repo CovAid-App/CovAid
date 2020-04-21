@@ -12,14 +12,10 @@ import json
 import requests
 import pycountry
 
-url = "https://api.covid19api.com/summary"
+# use covid19api to get data
+covid19 = requests.request("GET", "https://api.covid19api.com/summary")
 
-
-headers = {}
-
-covid19 = requests.request("GET", url, headers=headers)
-
-
+# create a new ChatBot using chatterbot
 chatbot = ChatBot(
     "CovAid",
     logic_adapters=[
@@ -27,10 +23,10 @@ chatbot = ChatBot(
     ]
 )
 
-
+# create a ListTrainer
 trainer = ListTrainer(chatbot)
 
-
+# List of item that need to trained
 trainer.train(['covid death global', f'As of {date.today()}, there are {covid19.json()["Global"]["TotalDeaths"]} deaths caused by COVID-19 worldwide'])
 trainer.train(['covid confirmed global', f'As of {date.today()}, there are {covid19.json()["Global"]["TotalConfirmed"]} confirmed cases of COVID-19 worldwide.'])
 trainer.train(['covid tips', f'1. STAY home as much as you can; 2. KEEP a safe distance; 3. WASH hands often 4. COVER your cough 5. SICK? Call ahead'])
@@ -44,34 +40,69 @@ trainer.train(['donate', f"Thanks for your generosity, and no matter how much di
 trainer.train(['is covid-19 present in animals?', f"According to multiple science research paper, they predict that it come from bat."])
 
 
-
+# get response from the chatbot
 def get_response(message):
+    """
+    Get response from the chatbot
+
+    Args:
+        message (str): the message that you want to get the response
+
+    Returns:
+        answer (str): the message responded from the chatbot
+    """
     response = chatbot.get_response(message)
     print(response)
     return response
 
 
+# get the country data
 def country_data(sentence):
+    """
+    Check a sentence see if it ask for any country's data
 
+    Args:
+        sentence (str): the sentence that you want to check
+
+    Returns:
+        bool (False) if sentence doesn't contain data
+        Tuple (value, date, country, keyword) if sentence does contain data
+    """
+
+    # split the word based on the single-space
     words = sentence.split()
+
+    # setup country, keyword variable for later use
     country = False
     keyword = False
 
+    # loop through the list of country from pycountry.countries
     for i in list(pycountry.countries):
+
+        # see if each individual country name is in the sentence, if so, country variable equal to country code (2)
         if i.name in sentence:
             country = i.alpha_2
 
+    # check if any word matches with keyword
     for word in words:
         if word in ['NewConfirmed', 'TotalConfirmed', 'NewDeaths', 'TotalDeaths', 'NewRecovered', 'TotalRecovered']:
             keyword = word
 
-    print(country, keyword)
+    # if both country and keyword variable are not False, proceed
     if country != False and keyword != False:
+
+        # get response from covid19api (summary route)
         url = "https://api.covid19api.com/summary"
-        payload = {}
-        headers= {}
-        response = requests.request("GET", url, headers=headers, data = payload)
+        response = requests.request("GET", url)
+
+        # loop through each individual countries dict
         for ctry in response.json()['Countries']:
+
+            # if country code matches country
             if ctry['CountryCode'] == country:
+
+                # return info
                 return ctry[keyword], ctry['Date'], country, keyword
+
+    # return False by default
     return False
