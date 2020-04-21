@@ -7,7 +7,6 @@ This design document is used to organize thought, manage code, system design, et
 This would help people to know accurate COVID-19 spread and other information quicker. One use of this is Discord bot. You could add this Bot to your discord server. So beside chatting with real people in the discord server, they can also chat with this bot. So people don't have to go to Twitter to see the "accurate" information. It would be best use during this pandemic, but maybe rewritten for future epidemic or for historical use.
 
 ## Overview of the Design
-The technology used mainly 
 
 ## The Scope of the Job
 
