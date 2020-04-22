@@ -2,6 +2,7 @@ import discord
 from bot import get_response, country_data
 from test import test_bot
 from termcolor import colored
+import os
 
 # start a new discord client
 client = discord.Client()
@@ -23,11 +24,9 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
-    # debug
-    print(message.content)
-
     # if tagged the bot
-    if message.content.startswith('<@!701186191940255785>'):
+    id = client.user.id
+    if str(id) in message.content:
 
         # get the question
         resp = str(message.content).split("<@!701186191940255785>")[1]
@@ -50,4 +49,4 @@ async def on_message(message):
             await message.channel.send(str(get_response(resp)))
 
 # return the client using this client id
-client.run("NzAxMTg2MTkxOTQwMjU1Nzg1.Xp58Vg.RDoPt-afgbh9-uzV9kHJmYjvM-A")
+client.run(os.getenv("DISCORD_TOKEN"))
