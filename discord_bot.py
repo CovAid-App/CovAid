@@ -61,4 +61,4 @@ async def on_message(message):
             await message.channel.send(str(get_response(resp)))
 
 # return the client using this client id
-client.run("")
+client.run("NzAxMTg2MTkxOTQwMjU1Nzg1.XqdVaw.mrVPgo33hOuHihzfo3YQMdxqGWg")
