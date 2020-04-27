@@ -2,7 +2,9 @@ import discord
 from bot import get_response, country_data
 from test import test_bot
 from termcolor import colored
+from track import get_grocery, best_time
 import os
+from datetime import datetime as date
 
 # start a new discord client
 client = discord.Client()
@@ -14,6 +16,10 @@ correct, total = test_bot(tests)
 correct = round(correct / total, 2)
 print(colored('Correct: ' + str(correct) + '%', 'green'))
 print(colored('Incorrect: ' + str(round(1 - correct, 2)) + '%', 'red'))
+
+data = get_grocery()
+day = date.today().strftime("%A")
+print(day)
 
 # print in console of bot name
 @client.event
@@ -29,10 +35,10 @@ async def on_message(message):
     if str(id) in message.content:
 
         # get the question
-        resp = str(message.content).split("<@!701186191940255785>")[1]
+        resp = str(message.content).split("<@!701186191940255785> ")[1]
 
         # if question is tips
-        if resp == " tips":
+        if resp == "tips":
 
             # send a message with tips.png
             await message.channel.send('Here are the 5 tips to avoid getting COVID-19', file=discord.File('tips.png'))
@@ -43,6 +49,12 @@ async def on_message(message):
             # get the output from that function and send the message, and send the message
             value, date, country, keyword = country_data(resp)
             await message.channel.send(f'As of {date}, in {country}, {keyword} is {value}.')
+
+        elif resp == 'grocery':
+            await message.channel.send(f"Here are the grocery store that is close to you: {get_grocery()}. Which one do you like to go? ")
+
+        elif resp in data.keys():
+            await message.channel.send(f'Best hour to visit: {best_time(data[resp], day)}')
 
         # if it none of these, use regelar ChatBot
         else:
