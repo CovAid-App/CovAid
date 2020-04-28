@@ -5,7 +5,6 @@ from termcolor import colored
 from track import get_grocery, best_time
 import os
 from datetime import datetime as date
-from opencage.geocoder import OpenCageGeocode
 import requests
 
 # start a new discord client
