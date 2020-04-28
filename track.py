@@ -2,6 +2,7 @@ import googlemaps, populartimes
 
 api_key = "AIzaSyAIe4GOG3T6JA5QexlfJKTSP5QSsCckg-I"
 client = googlemaps.Client(key=api_key)
+print(client.geolocate()['location'])
 
 """def get_current_coordinates():
     location = client.geolocate()['location']

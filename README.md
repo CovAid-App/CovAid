@@ -1,4 +1,0 @@
-# CovAid
-
-## Introduction
-

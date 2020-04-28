@@ -61,9 +61,10 @@ async def on_message(message):
             elif resp.count('-') < 2:
                 await message.channel.send(f"Here are the grocery store that is close to you: {data}. Which one do you like to go? ")
 
-        # if it none of these, use regelar ChatBot
+        # if it none of these, use regular ChatBot
         else:
             await message.channel.send(str(get_response(resp)))
 
+
 # return the client using this client id
-client.run("NzAxMTg2MTkxOTQwMjU1Nzg1.XqdVaw.mrVPgo33hOuHihzfo3YQMdxqGWg")
+client.run("NzAxMTg2MTkxOTQwMjU1Nzg1.XqiXew.VU-Ou36jLBQJB9t1SIp7Y9tNWME")

@@ -8,7 +8,6 @@ def test_bot(tests, times=100):
     test = []
     response = []
 
-
     for key, value in tests.items():
         test.append(key)
         response.append(value)
