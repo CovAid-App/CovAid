@@ -3,14 +3,17 @@ import googlemaps, populartimes
 api_key = "AIzaSyAIe4GOG3T6JA5QexlfJKTSP5QSsCckg-I"
 client = googlemaps.Client(key=api_key)
 
-def get_current_coordinates():
+"""def get_current_coordinates():
     location = client.geolocate()['location']
     lat,lng = location['lat'], location['lng']
-    return lat,lng
+    return lat,lng"""
 
-info = client.places("grocery store")
+def get_info(lat, lng):
 
-def best_time(place_index, day):
+    info = client.places("grocery store", (lat, lng))
+    return info
+
+def best_time(info, place_index, day):
 
     place_id = info["results"][place_index]["place_id"]
 
@@ -25,9 +28,10 @@ def best_time(place_index, day):
             time = i
     return time
 
-def get_grocery():
 
-    print(get_current_coordinates())
+def get_grocery(lat, lng):
+
+    info = get_info(lat, lng)
 
     result_dict = {}
 
@@ -35,10 +39,4 @@ def get_grocery():
         place = info['results'][i]
         result_dict[place['name']] = i
 
-    return result_dict
-    """ place_index = int(input("Please choose a place (0 - %d): " % (len(info['results'])-1) ))
-
-        place_id = info["results"][place_index]["place_id"]
-        day = str(input("which day? "))"""
-
-print(get_grocery())
+    return result_dict, info

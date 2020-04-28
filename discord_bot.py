@@ -5,6 +5,8 @@ from termcolor import colored
 from track import get_grocery, best_time
 import os
 from datetime import datetime as date
+from opencage.geocoder import OpenCageGeocode
+import requests
 
 # start a new discord client
 client = discord.Client()
@@ -17,9 +19,7 @@ correct = round(correct / total, 2)
 print(colored('Correct: ' + str(correct) + '%', 'green'))
 print(colored('Incorrect: ' + str(round(1 - correct, 2)) + '%', 'red'))
 
-data = get_grocery()
 day = date.today().strftime("%A")
-print(day)
 
 # print in console of bot name
 @client.event
@@ -50,11 +50,17 @@ async def on_message(message):
             value, date, country, keyword = country_data(resp)
             await message.channel.send(f'As of {date}, in {country}, {keyword} is {value}.')
 
-        elif resp == 'grocery':
-            await message.channel.send(f"Here are the grocery store that is close to you: {get_grocery()}. Which one do you like to go? ")
+        elif 'grocery' in resp:
+            import json
+            place = str(resp).split("-")[1]
+            geo = requests.get(f"https://api.opencagedata.com/geocode/v1/json?q={place}&key=485f61225dd041a9bae03a54cc0ef746").json()["results"][0]["geometry"]
+            data, info = get_grocery(geo['lat'], geo['lng'])
 
-        elif resp in data.keys():
-            await message.channel.send(f'Best hour to visit: {best_time(data[resp], day)}')
+            if resp.count('-') == 2:
+                store = str(resp).split("-")[2]
+                await message.channel.send(f'Best hour to visit: {best_time(info, data[store], day)}')
+            elif resp.count('-') < 2:
+                await message.channel.send(f"Here are the grocery store that is close to you: {data}. Which one do you like to go? ")
 
         # if it none of these, use regelar ChatBot
         else:
