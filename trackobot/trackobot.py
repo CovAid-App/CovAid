@@ -8,12 +8,19 @@ def get_user_coordinates():
     lat,lng = location['lat'], location['lng']
     return lat,lng
 
-def get_distance(coords1, coords2):
+def get_place_coordinates(place):
+    return place['geometry']['location']
+
+def get_distances_info(origins, destinations):
     '''
-    Returns the distance between two points in km, as a string.
+
     '''
-    dist_info = client.distance_matrix(coords1, coords2, "driving")
-    return dist_info['rows'][0]['elements'][0]['distance']['text']
+    dist_info = client.distance_matrix(origins, destinations, "driving")
+    
+    return dist_info
+
+def get_distance(distances_info, index):
+    return distances_info['rows'][index]['elements'][0]['distance']['text']
 
 def get_popular_times_info(place_id):
     '''
