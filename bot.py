@@ -56,7 +56,7 @@ def get_response(message):
 
 
 # get the country data
-def country_data(sentence):
+def country_data(sentence, country=None, keyword=None):
     """
     Check a sentence see if it ask for any country's data
 

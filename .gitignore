@@ -1,1 +1,3 @@
 __pycache__/
+db.sqlite3
+sentence_tokenizer.pickle

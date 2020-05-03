@@ -20,6 +20,7 @@ def test_bot(tests, times=100):
             val = random.choice(list(tests.items()))
             if str(get_response(val[0])) == val[1]:
                 correct += 1
+
     print('Test finished')
 
     return correct, total * times
