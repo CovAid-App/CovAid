@@ -84,4 +84,4 @@ async def on_message(message):
 
 
 # return the client using this client id
-client.run("NzAxMTg2MTkxOTQwMjU1Nzg1.Xq42ww.RO-CcaobXxPHz6rFRyk31rPz7es")
+client.run("")

@@ -2,7 +2,15 @@ from bot import get_response
 import random
 
 def test_bot(tests, times=100):
+    """
+    Get response from the chatbot
 
+    Args:
+        message (str): the message that you want to get the response
+
+    Returns:
+        answer (str): the message responded from the chatbot
+    """
     correct = 0
 
     test = []
