@@ -6,6 +6,7 @@ from track import get_grocery, best_time
 import os
 from datetime import datetime as date
 import requests
+from detect import test_string
 
 # start a new discord client
 client = discord.Client()
@@ -61,10 +62,26 @@ async def on_message(message):
             elif resp.count('-') < 2:
                 await message.channel.send(f"Here are the grocery store that is close to you: {data}. Which one do you like to go? ")
 
+        elif 'help' in resp:
+            await message.channel.send(
+            """
+            Hello World! This is CovAid Bot! To ask me a question, please tag me then ask your question. There are a few feature included:
+            1. **Just Chattin'** - You can ask some basic question about COVID-19, such as what is covid-19.
+            2. **Country Data** - You can search for data in country. You must include country name and one of following keywords: NewConfirmed, TotalConfirmed, NewDeaths, TotalDeaths, NewRecovered, or TotalRecovered.
+            3. **tips** Type `tips` you can see Public Announcement image made by Google/WHO about how to avoid getting COVID-19.
+            4. **Where are the grocery near me?** - To search for the groceries near an address, you can type `grocery-<YOUR CITY NAME/ADDRESS>`. (Your Address will only be use for search grocery.)
+            5. **When is the best time to visit grocery?** - To check the best time to visit a grocery, you can type `grocery-<YOUR CITY NAME/ADDRESS>-<GROCERY NAME>`.
+            6. **Detect whether you have COVID-19?** - We also offered a few links to self-detect whether you have COVID-19 or not. Type `detect` to get the links.
+            Thanks for using this bot! We hope you get the info you need, and we will get through this unprecedented time together! :)
+            """)
+
+        elif "detect" in resp:
+            await message.channel.send(test_string)
+
         # if it none of these, use regular ChatBot
         else:
             await message.channel.send(str(get_response(resp)))
 
 
 # return the client using this client id
-client.run("NzAxMTg2MTkxOTQwMjU1Nzg1.XqiXew.VU-Ou36jLBQJB9t1SIp7Y9tNWME")
+client.run("NzAxMTg2MTkxOTQwMjU1Nzg1.Xq42IA.k30GI9Fm40xb9UHUR3G__r2SJIs")
